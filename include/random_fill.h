@@ -23,9 +23,9 @@ typename std::enable_if<std::is_floating_point<T>::value, T>::type RandomRange(T
 }
 
 template<typename T>
-void fill_vector(std::vector<T>& v, T low, T high)
+void fill_vector(std::ranges::common_range auto& container, T low, T high)
 {
-    for(auto& n : v)
+    for(auto& n : container)
     {
         n = RandomRange(low, high);
     }

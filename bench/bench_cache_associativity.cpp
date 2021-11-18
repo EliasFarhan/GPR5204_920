@@ -8,7 +8,7 @@
 #include <cmath>
 
 const unsigned long fromRange = 32;
-const unsigned long toRange = 1024;
+const unsigned long toRange = 140;
 
 static int* v = nullptr;
 static constexpr size_t length = 1024*1024; //4MB
