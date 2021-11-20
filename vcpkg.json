@@ -2,6 +2,6 @@
     "name": "bench-gpr5204-920",
     "version-string": "1.0",
     "dependencies": [
-        "benchmark"
+        "benchmark", "gtest"
     ]
 }
