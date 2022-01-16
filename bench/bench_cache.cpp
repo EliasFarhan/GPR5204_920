@@ -28,7 +28,7 @@ static void BM_CacheBench(benchmark::State &state)
         }
         benchmark::DoNotOptimize(sum);
     }
-    state.SetBytesProcessed(std::size_t(state.iterations())* std::size_t(bytes));
+    state.SetBytesProcessed(static_cast<std::size_t>(state.iterations())* static_cast<std::size_t>(bytes));
     state.SetLabel(bytes/1024 > 1000?std::to_string(bytes/1024/1024)+"mb":std::to_string(bytes/1024)+"kb");
 
 }
