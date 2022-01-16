@@ -1,6 +1,7 @@
 
 #include <benchmark/benchmark.h>
 #include "random_fill.h"
+#include <cstring>
 
 
 constexpr long fromRange = 8;

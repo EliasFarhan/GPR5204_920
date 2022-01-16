@@ -18,10 +18,12 @@ static void BM_VectorIterate(benchmark::State& state)
     
     for (auto _ : state)
     {
+        float sum = 0.0f;
         for(std::size_t i = 0; i < length;i++)
         {
-            numbers_src[i] = numbers_src[i]*2.5f;
+            sum += numbers_src[i];
         }
+        benchmark::DoNotOptimize(sum);
     }
 }
 
@@ -36,10 +38,12 @@ static void BM_ListIterate(benchmark::State& state)
     
     for (auto _ : state)
     {
+        float sum = 0.0f;
         for(auto& n : numbers_src)
         {
-            n = n * 2.5f;
+            sum += n;
         }
+        benchmark::DoNotOptimize(sum);
     }
 }
 
