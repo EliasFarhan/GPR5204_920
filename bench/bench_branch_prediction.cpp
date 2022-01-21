@@ -64,7 +64,7 @@ static void BM_01_Branch_Predicted(benchmark::State& state)
         int a1 = 0, a2 = 0;
         for (std::size_t i = 0; i < length; i++)
         {
-            if (c1[i])
+            if (c1[i]) [[likely]]
             {
                 a1 += v1[i];
             }
@@ -108,7 +108,7 @@ static void BM_01_Branch_Predicted_Alt(benchmark::State& state)
         int a1 = 0, a2 = 0;
         for (std::size_t i = 0; i < length; i++)
         {
-            if (c1[i])
+            if (c1[i]) [[likely]]
             {
                 a1 += v1[i];
             }
@@ -148,7 +148,7 @@ static void BM_02_Branch_False(benchmark::State& state)
         int a1 = 0, a2 = 0;
         for (std::size_t i = 0; i < length; i++)
         {
-            if (c1[i] || c2[i])
+            if (c1[i] || c2[i]) [[likely]]
             {
                 a1 += v1[i];
             }
@@ -188,7 +188,7 @@ static void BM_02_Branch_False_BitWise(benchmark::State& state)
         int a1 = 0, a2 = 0;
         for (std::size_t i = 0; i < length; i++)
         {
-            if (c1[i] | c2[i])
+            if (c1[i] | c2[i]) [[likely]]
             {
                 a1 += v1[i];
             }
@@ -264,10 +264,10 @@ static void BM_03_Branchless(benchmark::State& state)
         int a1 = 0, a2 = 0;
         for (std::size_t i = 0; i < length; i++)
         {
-            int s1[2] = { 0, v1[i] - v2[i] };
-            int s2[2] = { v1[i] * v2[i] , 0 };
-            a1 += s1[bool(c1[i])];
-            a2 += s2[bool(c1[i])];
+            const int s1[2] = { 0, v1[i] - v2[i] };
+            const int s2[2] = { v1[i] * v2[i] , 0 };
+            a1 += s1[static_cast<bool>(c1[i])];
+            a2 += s2[static_cast<bool>(c1[i])];
         }
         benchmark::DoNotOptimize(a1);
         benchmark::DoNotOptimize(a2);
