@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cmath>
+#include <array>
 
 namespace maths
 {
@@ -17,7 +18,7 @@ inline bool Equal(float a, float b, float epsilon = 0.0000001f) {
     return Abs(a - b) < epsilon;
 }
 template<typename T>
-inline float Mod(T a, T b)
+float Mod(T a, T b)
 {
     return a<b?a:a%b;
 }

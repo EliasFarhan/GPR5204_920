@@ -8,12 +8,12 @@ class Mat4f
 public:
 	Mat4f() = default;
 	~Mat4f() = default;
-	Mat4f(const Mat4f& m) noexcept
+	constexpr Mat4f(const Mat4f& m) noexcept
 	{
 		values_ = m.values_;
 	}
 
-	Mat4f(const std::array<Vec4f, 4>& v)
+	constexpr Mat4f(const std::array<Vec4f, 4>& v)
 	{
 		values_ = v;
 	}
@@ -35,29 +35,29 @@ public:
 
 	static float MatrixDiff(const Mat4f& m1, const Mat4f& m2);
 
-	const static Mat4f Identity;
-	const static Mat4f Zero;
+	static constexpr Mat4f identity()
+	{
+	    return Mat4f(
+			std::array<Vec4f, 4>
+		{
+			Vec4f(1, 0, 0, 0),
+				Vec4f(0, 1, 0, 0),
+				Vec4f(0, 0, 1, 0),
+				Vec4f(0, 0, 0, 1)});
+	}
+	static constexpr  Mat4f zero()
+	{
+	    return Mat4f(
+			std::array<Vec4f, 4>
+		{
+			Vec4f::zero(),
+				Vec4f::zero(),
+				Vec4f::zero(),
+				Vec4f::zero()
+		});
+	}
 private:
 	std::array<Vec4f, 4> values_{};
 };
-
-const inline Mat4f Mat4f::Identity = Mat4f(
-	std::array<Vec4f, 4>
-{
-	Vec4f(1, 0, 0, 0),
-		Vec4f(0, 1, 0, 0),
-		Vec4f(0, 0, 1, 0),
-		Vec4f(0, 0, 0, 1)});
-
-
-const inline Mat4f Mat4f::Zero = Mat4f(
-	std::array<Vec4f, 4>
-{
-	Vec4f::zero(),
-    Vec4f::zero(),
-    Vec4f::zero(),
-    Vec4f::zero()
-});
-
 
 }

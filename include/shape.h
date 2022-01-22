@@ -1,19 +1,24 @@
 #pragma once
 
-#define _USE_MATH_DEFINES
 #include <cmath>
 
 
 class Shape
 {
 public:
+    Shape() = default;
     virtual ~Shape() = default;
+    Shape(const Shape&) = default;
+    Shape& operator=(const Shape& other) = default;
+    Shape(Shape&& other) noexcept = default;
+    Shape& operator=(Shape&& other) noexcept = default;
+
     [[nodiscard]] virtual float Area() const = 0;
     [[nodiscard]] virtual float Perimeter() const = 0;
 
 };
 
-class Circle : public Shape
+class Circle final : public Shape
 {
 public:
     Circle(float radius) : radius_(radius)
@@ -33,7 +38,7 @@ private:
     float radius_ = 0.0f;
 };
 
-class Rect : public Shape
+class Rect final : public Shape
 {
 public:
     Rect(float width, float height) : width_(width), height_(height)
