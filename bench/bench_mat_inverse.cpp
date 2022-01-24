@@ -42,7 +42,7 @@ BENCHMARK(BM_Mat4InverseOpti)->Range(fromRange, toRange);
 
 static void BM_Mat4InverseIdentityNaive(benchmark::State &state)
 {
-    std::vector<maths::Mat4f> m1(state.range(0), maths::Mat4f::Identity);
+    std::vector<maths::Mat4f> m1(state.range(0), maths::Mat4f::identity());
     for(auto _ : state)
     {
         for(std::int64_t i = 0; i < state.range(0); i++)
@@ -55,7 +55,7 @@ BENCHMARK(BM_Mat4InverseIdentityNaive)->Range(fromRange, toRange);
 
 static void BM_Mat4InverseIdentityOpti(benchmark::State &state)
 {
-    std::vector<maths::Mat4f> m1(state.range(0), maths::Mat4f::Identity);
+    std::vector<maths::Mat4f> m1(state.range(0), maths::Mat4f::identity());
     for(auto _ : state)
     {
         for(std::int64_t i = 0; i < state.range(0); i++)

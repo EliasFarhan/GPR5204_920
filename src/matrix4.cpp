@@ -36,10 +36,10 @@ Mat4f Mat4f::operator*(const Mat4f& rhs) const noexcept
 
 Mat4f Mat4f::Inverse() const
 {
-    Mat4f inverse = Zero;
+    Mat4f inverse = zero();
     const float determinant = Determinant();
     if (Equal(determinant, 0.0f))
-        return Zero;
+        return inverse;
     //Calculate the cofactor matrix
     for (int col = 0; col < 4; col++)
     {
@@ -100,9 +100,9 @@ Mat4f Mat4f::InverseOpti() const
         determinant4 += (i % 2 == 1 ? -1.0f : 1.0f) * values_[i][0] * det;
     }
 
-    Mat4f inverse;
+    Mat4f inverse = zero();
     if (Equal(determinant4, 0.0f))
-        return Zero;
+        return inverse;
     if(Equal(determinant4, 1.0f))
         return Transpose();
     //Calculate the cofactor matrix
