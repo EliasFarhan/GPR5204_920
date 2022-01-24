@@ -24,7 +24,7 @@ static void BM_01_Branch_Not_Predicted(benchmark::State& state)
 
     for (auto _ : state)
     {
-        int a1 = 0, a2 = 0;
+        int a1 = 0;
         for(std::size_t i = 0; i < length; i++)
         {
             if(c1[i])
@@ -33,11 +33,10 @@ static void BM_01_Branch_Not_Predicted(benchmark::State& state)
             }
             else
             {
-                a1 += v2[i];
+                a1 *= v2[i];
             }
         }
         benchmark::DoNotOptimize(a1);
-        benchmark::DoNotOptimize(a2);
         benchmark::ClobberMemory();
     }
     state.SetItemsProcessed(length * state.iterations());
@@ -64,13 +63,13 @@ static void BM_01_Branch_Predicted(benchmark::State& state)
         int a1 = 0, a2 = 0;
         for (std::size_t i = 0; i < length; i++)
         {
-            if (c1[i])
+            if (c1[i]) [[likely]]
             {
                 a1 += v1[i];
             }
             else
             {
-                a1 += v2[i];
+                a1 *= v2[i];
             }
         }
         benchmark::DoNotOptimize(a1);
@@ -114,7 +113,7 @@ static void BM_01_Branch_Predicted_Alt(benchmark::State& state)
             }
             else
             {
-                a1 += v2[i];
+                a1 *= v2[i];
             }
         }
         benchmark::DoNotOptimize(a1);
@@ -148,11 +147,11 @@ static void BM_02_Branch_False(benchmark::State& state)
         int a1 = 0, a2 = 0;
         for (std::size_t i = 0; i < length; i++)
         {
-            if (c1[i] || c2[i])
+            if (c1[i] || c2[i]) [[likely]]
             {
                 a1 += v1[i];
             }
-            else
+            else [[unlikely]]
             {
                 a1 *= v2[i];
             }
@@ -188,11 +187,11 @@ static void BM_02_Branch_False_BitWise(benchmark::State& state)
         int a1 = 0, a2 = 0;
         for (std::size_t i = 0; i < length; i++)
         {
-            if (c1[i] | c2[i])
+            if (c1[i] | c2[i]) [[likely]]
             {
                 a1 += v1[i];
             }
-            else
+            else [[unlikely]]
             {
                 a1 *= v2[i];
             }
