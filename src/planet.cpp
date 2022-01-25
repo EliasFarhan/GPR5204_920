@@ -5,10 +5,6 @@
 #include "planet.h"
 #include <random>
 
-#ifdef WIN32
-#define _USE_MATH_DEFINES
-#include <corecrt_math_defines.h>
-#endif
 #include <cmath>
 
 

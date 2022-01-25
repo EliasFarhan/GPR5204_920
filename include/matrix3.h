@@ -9,12 +9,12 @@ public:
 
     ~Mat3f() = default;
 
-    Mat3f(const Mat3f &m) noexcept {
-        values_ = m.values_;
+    constexpr Mat3f(const Mat3f &m) noexcept : values_(m.values_)
+    {
     }
 
-    Mat3f(const std::array<Vec3f, 3> &v) {
-        values_ = v;
+    constexpr Mat3f(const std::array<Vec3f, 3> &v) : values_(v)
+    {
     }
 
     Vec3f &operator[](std::size_t idx) { return values_[idx]; }
