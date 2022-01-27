@@ -7,60 +7,14 @@
 
 #include "random_fill.h"
 
+#include "parse_int.h"
+
 const long fromRange = 8;
 
-const long toRange = 1 << 15;
+const long toRange = 1 << 22;
 
 
 
-int parse_int(const char* p)
-{
-
-    int sign = 1;
-    if(*p == '-')
-    {
-        sign = -1;
-        p++;
-    }
-    int val = 0;
-    while (true)
-    {
-        int n = *p;
-        if (n >= '0' && n <= '9')
-        {
-            val *= 10;
-            val += n - '0';
-            p++;
-        }
-        else
-            break;
-    }
-    return val * sign;
-}
-
-int parse_int_branchless(const char* p)
-{
-    static constexpr int sign_array[2] = {-1, 1};
-    int conditional = *p == '-';
-    int sign = sign_array[conditional];
-    if(sign == -1)
-    {
-        p++;
-    }
-    //p = p + conditional;
-    int val = 0;
-    int is_digit = 1;
-    int new_val = 0;
-    while (is_digit)
-    {
-        val = new_val;
-        int n = *p;
-        new_val = val * 10 + (n - '0');
-        p++;
-        is_digit = (n >= '0') && (n <= '9');
-    }
-    return val * sign;
-}
 
 std::vector<std::string> generate_strings(std::size_t numbers)
 {
@@ -74,9 +28,10 @@ std::vector<std::string> generate_strings(std::size_t numbers)
         {
             if(i == 0)
             {
-                string_number[i] = RandomRange(0, 1) ? '-': RandomRange(0, 10) + '0';
+                string_number[i] = RandomRange(0, 2) ? '-': RandomRange(0, 10) + '0';
             }
-            else {
+            else 
+            {
                 string_number[i] = RandomRange(0, 10) + '0';
             }
         }
