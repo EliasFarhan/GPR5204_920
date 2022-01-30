@@ -4,6 +4,7 @@
 #include <benchmark/benchmark.h>
 #include <atomic>
 #include <memory>
+#include <mutex>
 
 class MyIntAtomic
 {
