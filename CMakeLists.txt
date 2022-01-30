@@ -6,6 +6,7 @@ set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(benchmark CONFIG REQUIRED)
 find_package(GTest CONFIG REQUIRED)
+include(GoogleTest)
 
 file(GLOB_RECURSE SRC_FILES src/*.cpp include/*.h)
 add_library(CommonLib STATIC ${SRC_FILES})
@@ -32,3 +33,14 @@ foreach(BENCH_FILE ${BENCH_FILES})
     
     set_target_properties (${BENCH_NAME} PROPERTIES FOLDER Bench)
 endforeach(BENCH_FILE ${BENCH_FILES})
+
+file(GLOB TEST_FILES test/*.cpp)
+
+foreach(TEST_FILE ${TEST_FILES})
+    get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)
+    add_executable(${TEST_NAME} ${TEST_FILE})
+    target_link_libraries(${TEST_NAME} PRIVATE CommonLib GTest::gtest GTest::gtest_main)
+    #gtest_add_tests(TARGET ${TEST_NAME})
+    
+    set_target_properties (${TEST_NAME} PROPERTIES FOLDER Test)
+endforeach()
