@@ -2,11 +2,10 @@
 #include <thread>
 #include <iostream>
 
-const size_t total = 10000;
+static constexpr size_t total = 10000;
 
 #ifdef WIN32
-//#define NOINLINE __declspec(noinline)
-using NOINLINE = __declspec(noinline);
+#define NOINLINE __declspec(noinline)
 #else
 #define NOINLINE __attribute__ ((noinline))
 #endif
@@ -19,7 +18,8 @@ public:
         : mMoney(0)
     {
     }
-    int GetMoney()
+
+    [[nodiscard]] int GetMoney() const
     {
         return mMoney;
     }
@@ -62,17 +62,17 @@ int main()
     for (int totalThread = 1; totalThread < 8; totalThread++)
     {
         int errorCount = 0;
-        for (size_t k = 0; k < total; k++)
+        for (size_t k = 0; k < total/totalThread; k++)
         {
             if ((val = TestMultithreadedWallet(totalThread)) != total * totalThread)
             {
-                std::cout << "Error at count = " << k << " Money in Wallet = " << val << std::endl;
+                //std::cout << "Error at count = " << k << " Money in Wallet = " << val << std::endl;
                 errorCount++;
             }
 
         }
 
-        std::cout << "Total error count: " << errorCount << " over 1000 with threads number: " << totalThread << "\n";
+        std::cout << "Total error count: " << errorCount << " over " << total <<" with threads number : " << totalThread << "\n";
     }
     return 0;
 }
