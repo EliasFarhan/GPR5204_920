@@ -47,3 +47,15 @@ foreach(TEST_FILE ${TEST_FILES})
     
     set_target_properties (${TEST_NAME} PROPERTIES FOLDER Test)
 endforeach()
+
+
+file(GLOB MAIN_FILES main/*.cpp)
+
+foreach(MAIN_FILE ${MAIN_FILES})
+    get_filename_component(MAIN_NAME ${MAIN_FILE} NAME_WE)
+    add_executable(${MAIN_NAME} ${MAIN_FILE})
+    target_link_libraries(${MAIN_NAME} PRIVATE CommonLib)
+    #gtest_add_tests(TARGET ${TEST_NAME})
+    
+    set_target_properties (${MAIN_NAME} PROPERTIES FOLDER Main)
+endforeach()
