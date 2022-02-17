@@ -206,7 +206,7 @@ Mat4f Mat4f::MultIntrinsics(const Mat4f &rhs) const noexcept
         x = _mm_add_ps(x, z);
         _mm_store_ps(&v[column][0], x);
     }
-    return Mat4f(v);
+    return {v};
 }
 
 #endif
@@ -235,7 +235,7 @@ Mat4f Mat4f::MultIntrinsics(const Mat4f &rhs) const noexcept
         x = vaddq_f32(x, z);
         vst1q_f32(&v[column][0], x);
     }
-    return Mat4f(v);
+    return {v};
 }
 
 #endif
