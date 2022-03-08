@@ -61,3 +61,26 @@ private:
     static std::uintptr_t alignForwardAdjustmentWithHeader(const void* address, std::uintptr_t alignment);
     void* currentPos_ = nullptr;
 };
+
+class FreeListAllocator final : public Allocator
+{
+public:
+    FreeListAllocator(void* rootPtr, std::size_t totalSize);
+
+    void* Allocate(std::size_t allocationSize, std::size_t alignment) override;
+    void Deallocate(void* ptr) override;
+private:
+    struct AllocationHeader
+    {
+        std::size_t allocationSize = 0;
+        std::uint8_t adjustment = 0;
+    };
+    struct FreeBlock
+    {
+        std::size_t freeSize = 0;
+        FreeBlock* next = nullptr;
+    };
+    FreeBlock* freeBlocks_ = nullptr;
+    static std::uintptr_t AlignForwardAdjustmentWithHeader(const void* address, std::uintptr_t alignment);
+        
+};

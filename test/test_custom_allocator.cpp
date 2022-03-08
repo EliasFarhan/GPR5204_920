@@ -88,3 +88,35 @@ TEST(CustomAllocator, StackAllocator)
     }
 
 }
+
+
+TEST(CustomAllocator, FreeListAllocator)
+{
+    std::array<char, 1000> data{};
+    {
+        constexpr auto allocationSize = 250ul;
+        FreeListAllocator allocator(data.data(), data.size());
+        auto* address1 = allocator.Allocate(allocationSize, 8);
+        auto* address2 = allocator.Allocate(allocationSize, 8);
+        auto* address3 = allocator.Allocate(allocationSize, 8);
+        EXPECT_GE(reinterpret_cast<std::uintptr_t>(address2) - reinterpret_cast<std::uintptr_t>(address1), 
+            allocationSize);
+        allocator.Deallocate(address2);
+        allocator.Deallocate(address3);
+        allocator.Deallocate(address1);
+    }
+
+    {
+        constexpr auto allocationSize = 250ul;
+        FreeListAllocator allocator(data.data(), data.size());
+        auto* address1 = allocator.Allocate(allocationSize, 8);
+        auto* address2 = allocator.Allocate(allocationSize, 8);
+        auto* address3 = allocator.Allocate(allocationSize, 8);
+        EXPECT_GE(reinterpret_cast<std::uintptr_t>(address2) - reinterpret_cast<std::uintptr_t>(address1),
+            allocationSize);
+        allocator.Deallocate(address1);
+        allocator.Deallocate(address2);
+        allocator.Deallocate(address3);
+    }
+
+}
