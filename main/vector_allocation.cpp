@@ -10,8 +10,8 @@ void* operator new(std::size_t sz) // no inline, required by [replacement.functi
     allocationCount++;
     if (void* ptr = std::malloc(sz))
         return ptr;
-
-    throw std::bad_alloc{}; // required by [new.delete.single]/3
+    return nullptr;
+    //throw std::bad_alloc{}; // required by [new.delete.single]/3
 }
 void operator delete(void* ptr) noexcept
 {

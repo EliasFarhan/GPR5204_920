@@ -163,7 +163,7 @@ static void BM_02_ArrayPadding(benchmark::State& state) {
     }
     if (state.thread_index() == 0) {
         // Teardown code here.
-        benchmark::DoNotOptimize(counter.data());
+        benchmark::DoNotOptimize(counter);
     }
 }
-BENCHMARK(BM_02_Array)->ThreadRange(1, maxThreads);
+BENCHMARK(BM_02_ArrayPadding)->ThreadRange(1, maxThreads);
